@@ -3,238 +3,449 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>RavelistKR | 공인중개사 홈페이지</title>
+  <title>RavelistKR | 공인중개사 안내</title>
+  <meta name="description" content="신뢰를 바탕으로 부동산 거래 과정을 차분하고 정확하게 안내하는 공인중개사 홈페이지입니다." />
   <style>
-    * {
-      box-sizing: border-box;
+    :root {
+      --bg: #f6f4ee;
+      --surface: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --line: #e5e7eb;
+      --primary: #0f766e;
+      --primary-dark: #115e59;
+      --accent: #e8f3f1;
+      --shadow: 0 20px 50px rgba(15, 23, 42, 0.08);
+      --radius: 22px;
+      --max: 1120px;
     }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
 
     body {
       margin: 0;
       font-family: "Pretendard", "Noto Sans KR", Arial, sans-serif;
-      background: #f5f7fb;
-      color: #1f2937;
-      line-height: 1.6;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, #ffffff 0%, #f6f4ee 45%, #f2efe8 100%);
+      line-height: 1.65;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .container {
+      width: min(var(--max), calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(10px);
+      background: rgba(246, 244, 238, 0.82);
+      border-bottom: 1px solid rgba(31, 41, 55, 0.06);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 0;
+    }
+
+    .brand {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 20px;
+      color: var(--muted);
+      font-size: 15px;
     }
 
     .hero {
-      background: linear-gradient(135deg, #0f172a, #1e3a8a);
-      color: white;
-      padding: 80px 20px 60px;
-      text-align: center;
+      padding: 88px 0 56px;
     }
 
-    .hero-inner {
-      max-width: 900px;
-      margin: 0 auto;
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 28px;
+      align-items: stretch;
     }
 
-    .badge {
+    .hero-main,
+    .hero-side,
+    .card,
+    .info-panel {
+      background: rgba(255,255,255,0.82);
+      border: 1px solid rgba(31, 41, 55, 0.07);
+      box-shadow: var(--shadow);
+      border-radius: var(--radius);
+    }
+
+    .hero-main {
+      padding: 44px;
+    }
+
+    .eyebrow {
       display: inline-block;
       padding: 8px 14px;
       border-radius: 999px;
-      background: rgba(255,255,255,0.15);
+      background: var(--accent);
+      color: var(--primary-dark);
       font-size: 14px;
-      margin-bottom: 20px;
+      font-weight: 700;
+      margin-bottom: 18px;
     }
 
     h1 {
-      margin: 0 0 16px;
-      font-size: 42px;
-      line-height: 1.2;
+      margin: 0;
+      font-size: clamp(36px, 6vw, 64px);
+      line-height: 1.08;
+      letter-spacing: -0.04em;
     }
 
-    .hero p {
-      margin: 0 auto;
-      max-width: 720px;
+    .hero-main p {
+      margin: 20px 0 0;
       font-size: 18px;
-      opacity: 0.92;
+      color: var(--muted);
+      max-width: 42rem;
     }
 
-    .cta {
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
       margin-top: 28px;
     }
 
     .btn {
-      display: inline-block;
-      padding: 14px 22px;
-      margin: 8px;
-      border-radius: 12px;
-      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px 20px;
+      border-radius: 14px;
       font-weight: 700;
       transition: 0.2s ease;
     }
 
     .btn-primary {
-      background: #ffffff;
-      color: #0f172a;
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dark);
     }
 
     .btn-secondary {
-      background: transparent;
-      color: #ffffff;
-      border: 1px solid rgba(255,255,255,0.35);
+      background: white;
+      border: 1px solid var(--line);
     }
 
-    .section {
-      max-width: 1080px;
-      margin: 0 auto;
-      padding: 56px 20px;
+    .hero-side {
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 22px;
     }
 
-    .section-title {
-      font-size: 30px;
-      margin-bottom: 14px;
-      text-align: center;
+    .mini-label {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--primary-dark);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
     }
 
-    .section-desc {
-      text-align: center;
-      color: #6b7280;
-      max-width: 760px;
-      margin: 0 auto 36px;
+    .hero-side h2 {
+      margin: 8px 0 12px;
+      font-size: 24px;
+      line-height: 1.25;
     }
 
-    .grid {
+    .hero-side p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .check-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 12px;
+    }
+
+    .check-list li {
+      padding: 14px 16px;
+      background: #fafaf9;
+      border-radius: 14px;
+      border: 1px solid rgba(31, 41, 55, 0.06);
+      font-size: 15px;
+    }
+
+    section {
+      padding: 22px 0 68px;
+    }
+
+    .section-head {
+      margin-bottom: 22px;
+    }
+
+    .section-head h2 {
+      margin: 0 0 10px;
+      font-size: 32px;
+      letter-spacing: -0.03em;
+    }
+
+    .section-head p {
+      margin: 0;
+      color: var(--muted);
+      max-width: 45rem;
+    }
+
+    .cards {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 20px;
     }
 
     .card {
-      background: #ffffff;
-      border-radius: 18px;
-      padding: 24px;
-      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+      padding: 26px;
+    }
+
+    .card-number {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: var(--accent);
+      color: var(--primary-dark);
+      font-weight: 800;
+      margin-bottom: 16px;
     }
 
     .card h3 {
-      margin-top: 0;
-      margin-bottom: 10px;
-      font-size: 20px;
+      margin: 0 0 10px;
+      font-size: 22px;
     }
 
     .card p {
       margin: 0;
-      color: #4b5563;
+      color: var(--muted);
     }
 
-    .info-box {
-      background: #ffffff;
-      border-radius: 20px;
-      padding: 32px;
-      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+    .info-wrap {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .info-panel {
+      padding: 28px;
+    }
+
+    .info-panel h3 {
+      margin: 0 0 16px;
+      font-size: 22px;
     }
 
     .info-list {
       list-style: none;
       padding: 0;
       margin: 0;
+      display: grid;
+      gap: 12px;
     }
 
     .info-list li {
-      padding: 12px 0;
-      border-bottom: 1px solid #e5e7eb;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--line);
     }
 
     .info-list li:last-child {
       border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .label {
+      display: block;
+      font-size: 14px;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+
+    .value {
+      font-size: 16px;
+      font-weight: 700;
     }
 
     .notice {
       font-size: 14px;
-      color: #6b7280;
-      margin-top: 18px;
+      color: var(--muted);
+      margin-top: 16px;
     }
 
     footer {
-      text-align: center;
-      padding: 30px 20px 50px;
-      color: #6b7280;
+      padding: 26px 0 50px;
+      color: var(--muted);
       font-size: 14px;
     }
 
-    @media (max-width: 900px) {
-      .grid {
+    @media (max-width: 980px) {
+      .hero-grid,
+      .cards,
+      .info-wrap {
         grid-template-columns: 1fr;
       }
 
-      h1 {
-        font-size: 32px;
+      .hero {
+        padding-top: 52px;
       }
 
-      .hero {
-        padding-top: 64px;
+      .hero-main,
+      .hero-side,
+      .card,
+      .info-panel {
+        padding: 24px;
+      }
+
+      .nav {
+        flex-direction: column;
+        gap: 10px;
+        align-items: flex-start;
+      }
+
+      .nav-links {
+        flex-wrap: wrap;
+        gap: 14px;
       }
     }
   </style>
 </head>
 <body>
-  <header class="hero">
-    <div class="hero-inner">
-      <div class="badge">RavelistKR Official Site</div>
-      <h1>신뢰를 바탕으로 연결하는<br />공인중개 서비스</h1>
-      <p>
-        안녕하세요. 공인중개사 Ravelist입니다.
-        고객이 이해하기 쉬운 설명과 성실한 상담을 바탕으로
-        부동산 거래 과정을 차분하고 정확하게 안내하겠습니다.
-      </p>
-      <div class="cta">
-        <a class="btn btn-primary" href="#contact">상담 안내 보기</a>
-        <a class="btn btn-secondary" href="https://github.com/RavelistKR" target="_blank" rel="noopener noreferrer">GitHub 프로필</a>
-      </div>
+  <header>
+    <div class="container nav">
+      <a href="#" class="brand">RavelistKR</a>
+      <nav class="nav-links">
+        <a href="#service">업무 안내</a>
+        <a href="#info">기본 정보</a>
+        <a href="#contact">상담 안내</a>
+      </nav>
     </div>
   </header>
 
   <main>
-    <section class="section">
-      <h2 class="section-title">업무 안내</h2>
-      <p class="section-desc">
-        홈페이지 초기 버전에서는 핵심 안내 중심으로 운영하고,
-        이후 매물 소개, 지역 정보, 상담 절차 등으로 확장할 수 있습니다.
-      </p>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-main">
+          <span class="eyebrow">Licensed Real Estate Service</span>
+          <h1>복잡한 부동산 거래를<br>더 이해하기 쉽게 안내합니다</h1>
+          <p>
+            안녕하세요. RavelistKR입니다.
+            고객이 놓치기 쉬운 거래 흐름과 확인 포인트를 차분하게 설명하고,
+            신뢰할 수 있는 중개 서비스를 목표로 홈페이지를 운영하고 있습니다.
+          </p>
+          <div class="hero-actions" id="contact">
+            <a class="btn btn-primary" href="mailto:example@email.com">이메일 상담 문의</a>
+            <a class="btn btn-secondary" href="https://github.com/RavelistKR" target="_blank" rel="noopener noreferrer">GitHub 프로필</a>
+          </div>
+        </div>
 
-      <div class="grid">
-        <div class="card">
-          <h3>매매 상담</h3>
-          <p>주택, 아파트, 소형 부동산 등 매매 관련 기본 상담과 진행 절차를 안내합니다.</p>
+        <aside class="hero-side">
+          <div>
+            <div class="mini-label">Core Focus</div>
+            <h2>신뢰, 설명, 절차 안내</h2>
+            <p>처음 거래하는 분도 이해할 수 있도록 핵심 내용을 간결하게 정리하는 방향의 홈페이지입니다.</p>
+          </div>
+
+          <ul class="check-list">
+            <li>매매·임대차 기본 상담</li>
+            <li>거래 절차와 체크포인트 안내</li>
+            <li>향후 지역 정보와 부동산 콘텐츠 확장 예정</li>
+          </ul>
+        </aside>
+      </div>
+    </section>
+
+    <section id="service">
+      <div class="container">
+        <div class="section-head">
+          <h2>업무 안내</h2>
+          <p>첫 홈페이지는 필요한 정보를 빠르게 파악할 수 있게 구성하는 것이 좋고, 핵심 정보와 명확한 상담 동선이 중요합니다.</p>
         </div>
-        <div class="card">
-          <h3>임대차 상담</h3>
-          <p>전세와 월세 계약 시 확인해야 할 핵심 사항을 이해하기 쉽게 정리해드립니다.</p>
-        </div>
-        <div class="card">
-          <h3>거래 절차 안내</h3>
-          <p>현장 확인부터 계약, 서류 검토, 잔금 전후 체크포인트까지 순서대로 설명합니다.</p>
+
+        <div class="cards">
+          <article class="card">
+            <div class="card-number">1</div>
+            <h3>매매 상담</h3>
+            <p>부동산 매매 진행 전 기본적인 확인 사항과 상담 흐름을 이해하기 쉽게 안내합니다.</p>
+          </article>
+
+          <article class="card">
+            <div class="card-number">2</div>
+            <h3>임대차 상담</h3>
+            <p>전세와 월세 계약 시 점검해야 할 실무 포인트를 정리해드립니다.</p>
+          </article>
+
+          <article class="card">
+            <div class="card-number">3</div>
+            <h3>절차 설명</h3>
+            <p>현장 확인, 계약, 서류 검토, 잔금 전후 체크포인트까지 단계별로 설명합니다.</p>
+          </article>
         </div>
       </div>
     </section>
 
-    <section class="section" id="contact">
-      <h2 class="section-title">기본 정보</h2>
-      <p class="section-desc">
-        아래 항목은 실제 개업 정보에 맞게 수정해서 사용하시면 됩니다.
-      </p>
+    <section id="info">
+      <div class="container">
+        <div class="section-head">
+          <h2>기본 정보</h2>
+          <p>아래 내용은 예시이므로 실제 개업 정보와 일치하도록 수정한 뒤 공개하는 것이 좋습니다.</p>
+        </div>
 
-      <div class="info-box">
-        <ul class="info-list">
-          <li><strong>상호명</strong> : Ravelist 부동산중개사무소</li>
-          <li><strong>대표</strong> : 홍길동 공인중개사</li>
-          <li><strong>소재지</strong> : 서울시 ○○구 ○○로 00</li>
-          <li><strong>연락처</strong> : 010-0000-0000</li>
-          <li><strong>이메일</strong> : example@email.com</li>
-          <li><strong>중개사무소 등록번호</strong> : 개업 후 기재</li>
-        </ul>
-        <p class="notice">
-          ※ 실제 광고·홍보에 활용할 경우에는 공인중개사법상 표시·광고 관련 필수 기재사항을
-          정확히 반영해 최종 점검 후 사용하세요.
-        </p>
+        <div class="info-wrap">
+          <div class="info-panel">
+            <h3>사무소 정보</h3>
+            <ul class="info-list">
+              <li><span class="label">상호명</span><span class="value">Ravelist 부동산중개사무소</span></li>
+              <li><span class="label">대표</span><span class="value">홍길동 공인중개사</span></li>
+              <li><span class="label">소재지</span><span class="value">서울시 ○○구 ○○로 00</span></li>
+              <li><span class="label">연락처</span><span class="value">010-0000-0000</span></li>
+            </ul>
+          </div>
+
+          <div class="info-panel">
+            <h3>추가 안내</h3>
+            <ul class="info-list">
+              <li><span class="label">이메일</span><span class="value">example@email.com</span></li>
+              <li><span class="label">중개사무소 등록번호</span><span class="value">개업 후 실제 번호 기재</span></li>
+              <li><span class="label">운영 방향</span><span class="value">정확한 설명과 신뢰 중심 상담</span></li>
+              <li><span class="label">비고</span><span class="value">향후 지역 정보 및 콘텐츠 확장 예정</span></li>
+            </ul>
+            <p class="notice">
+              ※ 실제 홍보·광고 활용 시에는 공인중개사법상 표시·광고 관련 기재사항을 최종 점검한 뒤 게시하세요.
+            </p>
+          </div>
+        </div>
       </div>
     </section>
   </main>
 
   <footer>
-    © 2026 RavelistKR. All rights reserved.
+    <div class="container">
+      © 2026 RavelistKR. All rights reserved.
+    </div>
   </footer>
 </body>
 </html>

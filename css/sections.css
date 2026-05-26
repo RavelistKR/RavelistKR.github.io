@@ -225,14 +225,6 @@
 .contact-panel,
 .map-card,
 .post-card {
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: calc(var(--radius-lg) - 4px);
-  box-shadow: var(--shadow-md);
-}
-
-.contact-panel,
-.map-card {
   padding: 24px;
 }
 
@@ -339,18 +331,6 @@
 }
 
 @media (max-width: 980px) {
-  .nav {
-    flex-wrap: wrap;
-    padding: 14px 0;
-  }
-
-  .nav-links {
-    order: 3;
-    width: 100%;
-    overflow-x: auto;
-    padding-bottom: 4px;
-  }
-
   .hero-grid,
   .focus-grid,
   .info-layout,
@@ -365,10 +345,6 @@
 }
 
 @media (max-width: 640px) {
-  .container {
-    width: min(var(--max), calc(100% - 20px));
-  }
-
   .hero-copy,
   .info-card,
   .section-card,
@@ -385,12 +361,7 @@
   }
 
   .hero-actions,
-  .nav-actions,
   .map-actions {
-    width: 100%;
-  }
-
-  .btn {
     width: 100%;
   }
 }

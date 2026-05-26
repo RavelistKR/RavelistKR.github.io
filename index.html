@@ -3,48 +3,238 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>RavelistKR</title>
+  <title>RavelistKR | 공인중개사 홈페이지</title>
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f7f7f7;
-      color: #222;
-      text-align: center;
-    }
-    .wrap {
-      max-width: 720px;
-      margin: 100px auto;
-      padding: 40px 20px;
-      background: white;
-      border-radius: 16px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-    }
-    h1 {
-      margin-bottom: 12px;
-      font-size: 36px;
-    }
-    p {
-      font-size: 18px;
+      font-family: "Pretendard", "Noto Sans KR", Arial, sans-serif;
+      background: #f5f7fb;
+      color: #1f2937;
       line-height: 1.6;
     }
+
+    .hero {
+      background: linear-gradient(135deg, #0f172a, #1e3a8a);
+      color: white;
+      padding: 80px 20px 60px;
+      text-align: center;
+    }
+
+    .hero-inner {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.15);
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      margin: 0 0 16px;
+      font-size: 42px;
+      line-height: 1.2;
+    }
+
+    .hero p {
+      margin: 0 auto;
+      max-width: 720px;
+      font-size: 18px;
+      opacity: 0.92;
+    }
+
+    .cta {
+      margin-top: 28px;
+    }
+
     .btn {
       display: inline-block;
-      margin-top: 24px;
-      padding: 14px 24px;
-      background: #0b57d0;
-      color: white;
+      padding: 14px 22px;
+      margin: 8px;
+      border-radius: 12px;
       text-decoration: none;
-      border-radius: 10px;
+      font-weight: 700;
+      transition: 0.2s ease;
+    }
+
+    .btn-primary {
+      background: #ffffff;
+      color: #0f172a;
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: #ffffff;
+      border: 1px solid rgba(255,255,255,0.35);
+    }
+
+    .section {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 56px 20px;
+    }
+
+    .section-title {
+      font-size: 30px;
+      margin-bottom: 14px;
+      text-align: center;
+    }
+
+    .section-desc {
+      text-align: center;
+      color: #6b7280;
+      max-width: 760px;
+      margin: 0 auto 36px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 18px;
+      padding: 24px;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+    }
+
+    .card h3 {
+      margin-top: 0;
+      margin-bottom: 10px;
+      font-size: 20px;
+    }
+
+    .card p {
+      margin: 0;
+      color: #4b5563;
+    }
+
+    .info-box {
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 32px;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+    }
+
+    .info-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .info-list li {
+      padding: 12px 0;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .info-list li:last-child {
+      border-bottom: none;
+    }
+
+    .notice {
+      font-size: 14px;
+      color: #6b7280;
+      margin-top: 18px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px 20px 50px;
+      color: #6b7280;
+      font-size: 14px;
+    }
+
+    @media (max-width: 900px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        font-size: 32px;
+      }
+
+      .hero {
+        padding-top: 64px;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <h1>RavelistKR 홈페이지</h1>
-    <p>안녕하세요. GitHub Pages로 만든 첫 홈페이지입니다.</p>
-    <p>앞으로 공인중개사 업무 소개와 콘텐츠를 이곳에 정리할 예정입니다.</p>
-    <a class="btn" href="https://github.com/RavelistKR" target="_blank" rel="noopener noreferrer">GitHub 보기</a>
-  </div>
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="badge">RavelistKR Official Site</div>
+      <h1>신뢰를 바탕으로 연결하는<br />공인중개 서비스</h1>
+      <p>
+        안녕하세요. 공인중개사 Ravelist입니다.
+        고객이 이해하기 쉬운 설명과 성실한 상담을 바탕으로
+        부동산 거래 과정을 차분하고 정확하게 안내하겠습니다.
+      </p>
+      <div class="cta">
+        <a class="btn btn-primary" href="#contact">상담 안내 보기</a>
+        <a class="btn btn-secondary" href="https://github.com/RavelistKR" target="_blank" rel="noopener noreferrer">GitHub 프로필</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="section">
+      <h2 class="section-title">업무 안내</h2>
+      <p class="section-desc">
+        홈페이지 초기 버전에서는 핵심 안내 중심으로 운영하고,
+        이후 매물 소개, 지역 정보, 상담 절차 등으로 확장할 수 있습니다.
+      </p>
+
+      <div class="grid">
+        <div class="card">
+          <h3>매매 상담</h3>
+          <p>주택, 아파트, 소형 부동산 등 매매 관련 기본 상담과 진행 절차를 안내합니다.</p>
+        </div>
+        <div class="card">
+          <h3>임대차 상담</h3>
+          <p>전세와 월세 계약 시 확인해야 할 핵심 사항을 이해하기 쉽게 정리해드립니다.</p>
+        </div>
+        <div class="card">
+          <h3>거래 절차 안내</h3>
+          <p>현장 확인부터 계약, 서류 검토, 잔금 전후 체크포인트까지 순서대로 설명합니다.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="contact">
+      <h2 class="section-title">기본 정보</h2>
+      <p class="section-desc">
+        아래 항목은 실제 개업 정보에 맞게 수정해서 사용하시면 됩니다.
+      </p>
+
+      <div class="info-box">
+        <ul class="info-list">
+          <li><strong>상호명</strong> : Ravelist 부동산중개사무소</li>
+          <li><strong>대표</strong> : 홍길동 공인중개사</li>
+          <li><strong>소재지</strong> : 서울시 ○○구 ○○로 00</li>
+          <li><strong>연락처</strong> : 010-0000-0000</li>
+          <li><strong>이메일</strong> : example@email.com</li>
+          <li><strong>중개사무소 등록번호</strong> : 개업 후 기재</li>
+        </ul>
+        <p class="notice">
+          ※ 실제 광고·홍보에 활용할 경우에는 공인중개사법상 표시·광고 관련 필수 기재사항을
+          정확히 반영해 최종 점검 후 사용하세요.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    © 2026 RavelistKR. All rights reserved.
+  </footer>
 </body>
 </html>

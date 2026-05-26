@@ -19,8 +19,8 @@
   --radius-md: 18px;
   --radius-lg: 26px;
   --radius-full: 999px;
-  --font-body: "Satoshi", "Pretendard", "Noto Sans KR", sans-serif;
-  --font-display: "Instrument Serif", Georgia, serif;
+  --font-body: "Noto Sans KR", sans-serif;
+  --font-display: "Noto Serif KR", serif;
   --text-xs: clamp(0.75rem, 0.72rem + 0.15vw, 0.875rem);
   --text-sm: clamp(0.9rem, 0.85rem + 0.2vw, 1rem);
   --text-base: clamp(1rem, 0.96rem + 0.2vw, 1.08rem);
@@ -92,12 +92,25 @@ svg {
   max-width: 100%;
 }
 
-button {
+button,
+input,
+textarea,
+select {
   font: inherit;
+  color: inherit;
+}
+
+button {
   border: 0;
   background: none;
   cursor: pointer;
-  color: inherit;
+}
+
+input,
+textarea,
+select {
+  border: 1px solid var(--color-border);
+  background: var(--color-surface-2);
 }
 
 .container {
@@ -118,4 +131,10 @@ button {
 
 .skip-link:focus {
   left: 12px;
+}
+
+@media (max-width: 640px) {
+  .container {
+    width: min(var(--max), calc(100% - 20px));
+  }
 }

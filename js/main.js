@@ -1,6 +1,15 @@
 (function () {
   const root = document.documentElement;
   const button = document.querySelector('[data-theme-toggle]');
+  const header = document.querySelector('.site-header');
+  const navLinks = Array.from(document.querySelectorAll('.nav-links a[href^="#"]'));
+  const sections = navLinks
+    .map((link) => {
+      const target = document.querySelector(link.getAttribute('href'));
+      return target ? { link, target } : null;
+    })
+    .filter(Boolean);
+
   let mode = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
 
   root.setAttribute('data-theme', mode);
@@ -15,7 +24,45 @@
     button.setAttribute('aria-label', nextMode === 'dark' ? '라이트 모드 전환' : '다크 모드 전환');
   }
 
+  function updateHeaderState() {
+    if (!header) return;
+    if (window.scrollY > 12) {
+      header.classList.add('is-scrolled');
+    } else {
+      header.classList.remove('is-scrolled');
+    }
+  }
+
+  function updateActiveNav() {
+    if (!sections.length) return;
+
+    const offset = (header ? header.offsetHeight : 72) + 80;
+    let current = sections[0];
+
+    sections.forEach((item) => {
+      if (window.scrollY >= item.target.offsetTop - offset) {
+        current = item;
+      }
+    });
+
+    sections.forEach((item) => {
+      item.link.classList.toggle('is-active', item === current);
+      if (item === current) {
+        item.link.setAttribute('aria-current', 'page');
+      } else {
+        item.link.removeAttribute('aria-current');
+      }
+    });
+  }
+
+  function onScroll() {
+    updateHeaderState();
+    updateActiveNav();
+  }
+
   renderIcon(mode);
+  updateHeaderState();
+  updateActiveNav();
 
   if (button) {
     button.addEventListener('click', function () {
@@ -24,4 +71,13 @@
       renderIcon(mode);
     });
   }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', updateActiveNav);
+
+  navLinks.forEach((link) => {
+    link.addEventListener('click', function () {
+      requestAnimationFrame(updateActiveNav);
+    });
+  });
 })();

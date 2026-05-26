@@ -3,68 +3,91 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>RavelistKR | 공인중개사 개업 준비</title>
-  <meta name="description" content="개업을 준비 중인 공인중개사 RavelistKR의 안내 페이지입니다. 부동산 거래 절차와 확인 포인트를 정리합니다." />
+  <title>RavelistKR | 경기도 중심 공인중개사 개업 준비</title>
+  <meta name="description" content="경기도 지역 중심으로 개업을 준비 중인 공인중개사 RavelistKR의 안내 페이지입니다. 실거주 관점의 부동산 정보와 거래 절차를 쉽게 정리합니다." />
   <style>
     :root {
-      --bg: #f6f4ee;
-      --surface: #ffffff;
+      --bg: #f7f5ef;
+      --surface: rgba(255,255,255,0.88);
       --text: #1f2937;
-      --muted: #6b7280;
-      --line: #e5e7eb;
-      --primary: #0f766e;
-      --primary-dark: #115e59;
-      --accent: #e8f3f1;
-      --shadow: 0 20px 50px rgba(15, 23, 42, 0.08);
+      --muted: #667085;
+      --line: #e6e8ec;
+      --primary: #1d5c4d;
+      --primary-dark: #17483c;
+      --accent: #e7f1ed;
+      --shadow: 0 18px 48px rgba(15, 23, 42, 0.08);
       --radius: 22px;
       --max: 1120px;
     }
 
     * { box-sizing: border-box; }
+
     body {
       margin: 0;
       font-family: "Pretendard", "Noto Sans KR", Arial, sans-serif;
       color: var(--text);
-      background: radial-gradient(circle at top left, #ffffff 0%, #f6f4ee 45%, #f2efe8 100%);
+      background:
+        radial-gradient(circle at top left, #ffffff 0%, #f7f5ef 42%, #f1ede4 100%);
       line-height: 1.65;
     }
 
     a { color: inherit; text-decoration: none; }
-    .container { width: min(var(--max), calc(100% - 40px)); margin: 0 auto; }
+
+    .container {
+      width: min(var(--max), calc(100% - 40px));
+      margin: 0 auto;
+    }
 
     header {
       position: sticky;
       top: 0;
+      z-index: 10;
       backdrop-filter: blur(10px);
-      background: rgba(246, 244, 238, 0.85);
+      background: rgba(247, 245, 239, 0.86);
       border-bottom: 1px solid rgba(31, 41, 55, 0.06);
     }
 
     .nav {
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: space-between;
       padding: 18px 0;
     }
 
-    .brand { font-size: 20px; font-weight: 800; }
-    .nav-links { display: flex; gap: 18px; color: var(--muted); font-size: 15px; }
+    .brand {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
 
-    .hero { padding: 84px 0 54px; }
+    .nav-links {
+      display: flex;
+      gap: 18px;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .hero {
+      padding: 84px 0 56px;
+    }
+
     .hero-grid {
       display: grid;
       grid-template-columns: 1.15fr 0.85fr;
       gap: 28px;
     }
 
-    .panel, .card {
-      background: rgba(255,255,255,0.85);
+    .panel, .card, .info-box {
+      background: var(--surface);
       border: 1px solid rgba(31, 41, 55, 0.07);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
     }
 
-    .panel { padding: 40px; }
+    .panel {
+      padding: 40px;
+    }
+
     .badge {
       display: inline-block;
       padding: 8px 14px;
@@ -79,7 +102,7 @@
     h1 {
       margin: 0;
       font-size: clamp(34px, 6vw, 60px);
-      line-height: 1.1;
+      line-height: 1.08;
       letter-spacing: -0.04em;
     }
 
@@ -87,7 +110,7 @@
       margin-top: 18px;
       font-size: 18px;
       color: var(--muted);
-      max-width: 42rem;
+      max-width: 43rem;
     }
 
     .actions {
@@ -106,15 +129,22 @@
       font-weight: 700;
     }
 
-    .btn-primary { background: var(--primary); color: white; }
-    .btn-secondary { background: white; border: 1px solid var(--line); }
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
 
-    .side-note h2 {
-      margin: 10px 0 12px;
+    .btn-secondary {
+      background: white;
+      border: 1px solid var(--line);
+    }
+
+    .side h2 {
+      margin: 8px 0 12px;
       font-size: 24px;
     }
 
-    .side-note p {
+    .side p {
       margin: 0 0 18px;
       color: var(--muted);
     }
@@ -129,13 +159,15 @@
 
     .list li {
       padding: 14px 16px;
-      background: #fafaf9;
+      background: #fbfbf9;
       border-radius: 14px;
-      border: 1px solid rgba(31, 41, 55, 0.06);
+      border: 1px solid rgba(31, 41, 55, 0.05);
       font-size: 15px;
     }
 
-    section { padding: 20px 0 64px; }
+    section {
+      padding: 18px 0 64px;
+    }
 
     .section-head h2 {
       margin: 0 0 10px;
@@ -146,7 +178,7 @@
     .section-head p {
       margin: 0 0 22px;
       color: var(--muted);
-      max-width: 45rem;
+      max-width: 46rem;
     }
 
     .cards {
@@ -155,7 +187,9 @@
       gap: 20px;
     }
 
-    .card { padding: 26px; }
+    .card {
+      padding: 26px;
+    }
 
     .card h3 {
       margin: 0 0 10px;
@@ -168,10 +202,6 @@
     }
 
     .info-box {
-      background: rgba(255,255,255,0.85);
-      border: 1px solid rgba(31, 41, 55, 0.07);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
       padding: 28px;
     }
 
@@ -218,15 +248,20 @@
     }
 
     @media (max-width: 980px) {
-      .hero-grid, .cards { grid-template-columns: 1fr; }
+      .hero-grid, .cards {
+        grid-template-columns: 1fr;
+      }
+
       .nav {
         flex-direction: column;
         align-items: flex-start;
         gap: 10px;
       }
+
       .nav-links {
         flex-wrap: wrap;
       }
+
       .panel, .card, .info-box {
         padding: 24px;
       }
@@ -239,7 +274,7 @@
       <a href="#" class="brand">RavelistKR</a>
       <nav class="nav-links">
         <a href="#about">소개</a>
-        <a href="#service">준비 분야</a>
+        <a href="#focus">준비 방향</a>
         <a href="#info">안내 사항</a>
       </nav>
     </div>
@@ -249,52 +284,54 @@
     <section class="hero" id="about">
       <div class="container hero-grid">
         <div class="panel">
-          <span class="badge">Pre-Opening Real Estate Office</span>
-          <h1>개업을 준비 중인<br>공인중개사 RavelistKR입니다</h1>
+          <span class="badge">Gyeonggi Real Estate · Pre-Opening</span>
+          <h1>경기도 생활권을 중심으로<br>개업을 준비 중인 공인중개사입니다</h1>
           <p class="lead">
+            안녕하세요. RavelistKR입니다.
             현재는 정식 개업을 준비하는 단계이며,
-            부동산 거래 절차와 확인 포인트를 이해하기 쉽게 정리하는 안내형 홈페이지로 운영하고 있습니다.
+            경기도 지역을 중심으로 실거주 관점의 부동산 정보와 거래 절차를
+            이해하기 쉽게 정리하는 홈페이지를 운영하고 있습니다.
           </p>
           <div class="actions">
-            <a class="btn btn-primary" href="mailto:example@email.com">이메일 문의</a>
+            <a class="btn btn-primary" href="mailto:example@email.com">문의 남기기</a>
             <a class="btn btn-secondary" href="https://github.com/RavelistKR" target="_blank" rel="noopener noreferrer">GitHub 프로필</a>
           </div>
         </div>
 
-        <div class="panel side-note">
-          <h2>현재 운영 방향</h2>
+        <div class="panel side">
+          <h2>브랜딩 방향</h2>
           <p>
-            개업 전 단계에서는 신뢰를 바탕으로 한 정보 정리와 준비 과정을 중심으로 홈페이지를 운영하고,
-            정식 개업 후에는 실제 상담 정보와 사무소 정보를 반영할 예정입니다.
+            경기도는 생활권과 이동 동선, 주거 선택 기준이 다양하게 나뉘는 지역입니다.
+            그래서 단순한 매물 정보보다 지역의 결을 이해하기 쉬운 설명으로 전달하는 방향을 지향합니다.
           </p>
           <ul class="list">
-            <li>부동산 거래 절차와 체크포인트 정리</li>
-            <li>개업 준비 과정과 운영 방향 안내</li>
-            <li>정식 개업 후 실제 정보로 업데이트 예정</li>
+            <li>경기도 생활권 중심 정보 정리</li>
+            <li>실거주 관점의 거래 절차 안내</li>
+            <li>정식 개업 후 실제 운영 정보 반영 예정</li>
           </ul>
         </div>
       </div>
     </section>
 
-    <section id="service">
+    <section id="focus">
       <div class="container">
         <div class="section-head">
-          <h2>준비 분야</h2>
-          <p>개업 전 단계에서는 실제 중개 광고보다는 신뢰 형성과 정보 제공 중심의 구성이 적합합니다.</p>
+          <h2>준비 방향</h2>
+          <p>지역 중심 공인중개사 홈페이지는 어느 지역을 이해하고, 어떤 기준으로 설명하는지가 분명할수록 신뢰 형성에 도움이 됩니다.</p>
         </div>
 
         <div class="cards">
           <div class="card">
-            <h3>거래 절차 안내</h3>
-            <p>매매와 임대차 거래 시 기본적으로 확인해야 할 흐름과 실무 포인트를 정리합니다.</p>
+            <h3>생활권 이해</h3>
+            <p>경기도 내 지역별 생활권, 이동 편의성, 주거 선택 기준을 이해하기 쉬운 언어로 정리하는 방향을 준비하고 있습니다.</p>
           </div>
           <div class="card">
-            <h3>정보 콘텐츠 정리</h3>
-            <p>초보 거래자도 이해하기 쉬운 설명형 콘텐츠를 중심으로 홈페이지를 확장할 예정입니다.</p>
+            <h3>실거주 관점</h3>
+            <p>단순 시세보다 실제 거주 관점에서 필요한 확인 포인트와 거래 흐름을 설명하는 데 집중합니다.</p>
           </div>
           <div class="card">
-            <h3>개업 후 정보 반영</h3>
-            <p>사무소 개설등록 완료 후 상호, 등록번호, 연락처 등 실제 운영 정보를 업데이트합니다.</p>
+            <h3>차분한 안내</h3>
+            <p>부담을 주는 영업형 문구보다 정확하고 신뢰감 있는 설명 중심의 홈페이지를 지향합니다.</p>
           </div>
         </div>
       </div>
@@ -304,19 +341,20 @@
       <div class="container">
         <div class="section-head">
           <h2>안내 사항</h2>
-          <p>현재 페이지는 개업 준비 단계의 안내용 페이지이며, 정식 개업 후 실제 정보 기준으로 수정됩니다.</p>
+          <p>현재 페이지는 개업 준비 단계의 소개용 페이지이며, 정식 개업 이후 실제 정보 기준으로 업데이트할 예정입니다.</p>
         </div>
 
         <div class="info-box">
           <ul class="info-list">
             <li><span class="label">현재 상태</span><span class="value">공인중개사 개업 준비 중</span></li>
+            <li><span class="label">중점 지역</span><span class="value">경기도 생활권 중심</span></li>
             <li><span class="label">상호명</span><span class="value">정식 개업 후 반영 예정</span></li>
             <li><span class="label">사무소 소재지</span><span class="value">개설등록 완료 후 반영 예정</span></li>
-            <li><span class="label">연락처</span><span class="value">정식 운영 정보 확정 후 반영 예정</span></li>
+            <li><span class="label">연락처</span><span class="value">운영 정보 확정 후 반영 예정</span></li>
             <li><span class="label">중개사무소 등록번호</span><span class="value">개업 후 실제 번호 기재 예정</span></li>
           </ul>
           <p class="notice">
-            ※ 이 페이지는 개업 준비 단계의 소개용 페이지입니다. 실제 중개사무소 정보와 표시·광고 관련 사항은 정식 개업 후 정확한 내용으로 반영할 예정입니다.
+            ※ 이 페이지는 개업 준비 단계의 안내용 페이지입니다. 실제 중개사무소 정보 및 표시·광고 관련 사항은 정식 개업 후 정확한 내용으로 반영할 예정입니다.
           </p>
         </div>
       </div>

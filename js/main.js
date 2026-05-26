@@ -4,15 +4,17 @@
   const header = document.querySelector('.site-header');
   const nav = document.querySelector('.nav-links');
   const navLinks = Array.from(document.querySelectorAll('.nav-links a[href^="#"]'));
+
   const sections = navLinks
     .map((link) => {
-      const target = document.querySelector(link.getAttribute('href'));
-      return target ? { link, target } : null;
+      const href = link.getAttribute('href');
+      const target = href ? document.querySelector(href) : null;
+      return target ? { link, target, href } : null;
     })
     .filter(Boolean);
 
   let mode = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-  let activeId = "";
+  let activeHref = '';
 
   root.setAttribute('data-theme', mode);
 
@@ -33,6 +35,7 @@
 
   function scrollActiveLinkIntoView(link) {
     if (!nav || !link || window.innerWidth > 980) return;
+
     link.scrollIntoView({
       behavior: 'smooth',
       inline: 'center',
@@ -63,9 +66,8 @@
       }
     });
 
-    const nextId = current.link.getAttribute('href');
-    if (nextId !== activeId) {
-      activeId = nextId;
+    if (current.href !== activeHref) {
+      activeHref = current.href;
       scrollActiveLinkIntoView(current.link);
     }
   }

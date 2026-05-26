@@ -108,9 +108,3 @@ button {
 .skip-link:focus {
   left: 12px;
 }
-
-@media (max-width: 640px) {
-  .container {
-    width: min(var(--max), calc(100% - 20px));
-  }
-}

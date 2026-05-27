@@ -487,4 +487,19 @@
   .btn {
     width: 100%;
   }
+
+  /* 모바일 푸터 가독성 개선 */
+  .site-footer {
+    padding: 36px 0 48px;
+    margin-top: 48px;
+  }
+
+  .footer-info {
+    line-height: 1.8;
+    word-break: keep-all;
+  }
+
+  .footer-info strong {
+    margin-bottom: 16px;
+  }
 }

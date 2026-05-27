@@ -168,7 +168,6 @@
   let currentFilter = 'all';
   let currentPage = 1;
   const ITEMS_PER_PAGE = 4; // 한 번에 불러올 매물 수
-  let infiniteObserver = null;
 
   function renderListings(filterType = 'all', isLoadMore = false) {
     const container = document.querySelector('#listings .listings-grid');
@@ -194,9 +193,9 @@
       return;
     }
 
-    // 무한 스크롤 감지기(Sentinel)가 있다면 렌더링 전 잠시 제거
-    const existingSentinel = container.querySelector('.scroll-sentinel');
-    if (existingSentinel) existingSentinel.remove();
+    // 더보기 버튼 영역이 있다면 렌더링 전 잠시 제거
+    const existingLoadMore = container.querySelector('.load-more-wrapper');
+    if (existingLoadMore) existingLoadMore.remove();
 
     // 현재 페이지에 해당하는 데이터만 잘라내기
     const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
@@ -226,25 +225,19 @@
       container.innerHTML = html;
     }
 
-    // 불러올 데이터가 더 남았다면 감지기(Sentinel)를 맨 끝에 추가하고 관찰 시작
+    // 불러올 데이터가 더 남았다면 더보기 버튼을 맨 끝에 추가
     if (endIndex < filteredListings.length) {
-      container.insertAdjacentHTML('beforeend', '<div class="scroll-sentinel"><span class="loader"></span></div>');
-      const sentinel = container.querySelector('.scroll-sentinel');
-      setupInfiniteScroll(sentinel);
-    }
-  }
-
-  function setupInfiniteScroll(sentinel) {
-    if (infiniteObserver) infiniteObserver.disconnect();
-
-    infiniteObserver = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting) {
+      container.insertAdjacentHTML('beforeend', `
+        <div class="load-more-wrapper">
+          <button class="btn btn-secondary" id="load-more-btn">더보기</button>
+        </div>
+      `);
+      const loadMoreBtn = container.querySelector('#load-more-btn');
+      loadMoreBtn.addEventListener('click', () => {
         currentPage++;
-        renderListings(currentFilter, true); // 다음 페이지 렌더링 (isLoadMore = true)
-      }
-    }, { rootMargin: '100px' }); // 화면 하단에서 100px 남았을 때 미리 로딩
-
-    infiniteObserver.observe(sentinel);
+        renderListings(currentFilter, true); // 다음 페이지 렌더링
+      });
+    }
   }
 
   // 초기 렌더링 실행

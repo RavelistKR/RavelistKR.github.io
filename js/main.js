@@ -195,15 +195,30 @@
     }
   ];
 
-  // 성능 테스트를 위해 기존 데이터를 복제하여 12개의 더미 데이터 생성
-  const expandedListings = Array.from({ length: 12 }, (_, i) => {
-    const base = dummyListings[i % dummyListings.length];
-    return { ...base, id: i + 1 };
-  });
+  // 실제 매물 데이터를 담을 전역 배열
+  let realListings = [];
 
   let currentFilter = 'all';
   let currentPage = 1;
   const ITEMS_PER_PAGE = 4; // 한 번에 불러올 매물 수
+
+  // 외부 JSON 데이터를 비동기로 불러오는 함수
+  async function loadListingsData() {
+    try {
+      // [!] 실제 데이터 연동 시 아래 두 줄의 주석(//)을 해제하세요.
+      // const response = await fetch('./data/listings.json');
+      // realListings = await response.json();
+
+      // (현재 임시 코드) JSON 파일이 준비되기 전까지 기존 더미 데이터를 복제하여 사용
+      if (realListings.length === 0) {
+        realListings = Array.from({ length: 12 }, (_, i) => ({ ...dummyListings[i % dummyListings.length], id: i + 1 }));
+      }
+      
+      renderListings(); // 데이터 로드 후 화면 렌더링
+    } catch (error) {
+      console.error('매물 데이터를 불러오는 중 오류가 발생했습니다:', error);
+    }
+  }
 
   function renderListings(filterType = 'all', isLoadMore = false) {
     const container = document.querySelector('#listings .listings-grid');
@@ -217,8 +232,8 @@
     }
 
     const filteredListings = currentFilter === 'all' 
-      ? expandedListings 
-      : expandedListings.filter(item => item.type === currentFilter);
+      ? realListings 
+      : realListings.filter(item => item.type === currentFilter);
 
     if (filteredListings.length === 0 && !isLoadMore) {
       container.innerHTML = `
@@ -276,8 +291,8 @@
     }
   }
 
-  // 초기 렌더링 실행
-  renderListings();
+  // 초기 데이터 로드 및 렌더링 실행
+  loadListingsData();
 
   // 탭 필터 이벤트 리스너 추가
   const tabButtons = document.querySelectorAll('.tab-btn');
@@ -414,7 +429,7 @@
       const card = e.target.closest('.listing-card');
       if (!card) return;
       const id = Number(card.getAttribute('data-id'));
-      const item = expandedListings.find(l => l.id === id);
+      const item = realListings.find(l => l.id === id);
       if (item) {
         openModal(`
           <img class="modal-image" src="${item.imageUrl}" alt="${item.title}">

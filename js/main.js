@@ -256,4 +256,54 @@
       renderListings(filter);
     });
   });
+
+  // ==========================================
+  // 상담 문의 폼 (Formspree) 비동기 전송 처리
+  // ==========================================
+  const consultForm = document.querySelector('.consult-form');
+  const successMessage = document.getElementById('form-success-message');
+  const errorMessage = document.getElementById('form-error-message');
+
+  if (consultForm) {
+    consultForm.addEventListener('submit', async function (e) {
+      e.preventDefault();
+
+      // 이전 메시지 초기화
+      if (successMessage) successMessage.hidden = true;
+      if (errorMessage) errorMessage.hidden = true;
+
+      const formData = new FormData(consultForm);
+      const actionUrl = consultForm.getAttribute('action');
+      const submitBtn = consultForm.querySelector('button[type="submit"]');
+
+      // 중복 전송 방지를 위한 버튼 비활성화
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = '전송 중...';
+      }
+
+      try {
+        const response = await fetch(actionUrl, {
+          method: 'POST',
+          body: formData,
+          headers: { 'Accept': 'application/json' }
+        });
+
+        if (response.ok) {
+          if (successMessage) successMessage.hidden = false;
+          consultForm.reset(); // 성공 시 폼 입력값 초기화
+        } else {
+          if (errorMessage) errorMessage.hidden = false;
+        }
+      } catch (error) {
+        if (errorMessage) errorMessage.hidden = false;
+      } finally {
+        // 처리 완료 후 버튼 원상 복구
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = '문의 보내기';
+        }
+      }
+    });
+  }
 })();

@@ -360,6 +360,19 @@
 
   // 외부 JSON(구글 시트) 데이터를 비동기로 불러오는 함수
   async function loadPricesData() {
+    const container = document.querySelector('#price .focus-grid');
+    if (container) {
+      container.innerHTML = Array(3).fill(`
+        <article class="section-card">
+          <div class="skeleton" style="width: 40px; height: 28px; border-radius: 999px; margin-bottom: 14px;"></div>
+          <div class="skeleton" style="width: 70%; height: 24px; margin-bottom: 12px;"></div>
+          <div class="skeleton" style="width: 50%; height: 20px; margin-bottom: 16px;"></div>
+          <div class="skeleton" style="width: 100%; height: 16px; margin-bottom: 8px;"></div>
+          <div class="skeleton" style="width: 80%; height: 16px;"></div>
+        </article>
+      `).join('');
+    }
+
     try {
       // [!] 실거래가용으로 새로 만든 구글 스프레드시트의 ID를 붙여넣으세요.
       const PRICE_SHEET_ID = '여기에_실거래가_스프레드시트_ID를_넣어주세요'; 

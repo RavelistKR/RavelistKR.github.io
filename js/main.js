@@ -159,15 +159,33 @@
     }
   ];
 
-  function renderListings(filterType = 'all') {
+  // 성능 테스트를 위해 기존 데이터를 복제하여 12개의 더미 데이터 생성
+  const expandedListings = Array.from({ length: 12 }, (_, i) => {
+    const base = dummyListings[i % dummyListings.length];
+    return { ...base, id: i + 1 };
+  });
+
+  let currentFilter = 'all';
+  let currentPage = 1;
+  const ITEMS_PER_PAGE = 4; // 한 번에 불러올 매물 수
+  let infiniteObserver = null;
+
+  function renderListings(filterType = 'all', isLoadMore = false) {
     const container = document.querySelector('#listings .listings-grid');
     if (!container) return;
 
-    const filteredListings = filterType === 'all' 
-      ? dummyListings 
-      : dummyListings.filter(item => item.type === filterType);
+    // 새 필터 적용 시 페이징 초기화
+    if (!isLoadMore) {
+      currentFilter = filterType;
+      currentPage = 1;
+      container.innerHTML = ''; // 초기화
+    }
 
-    if (filteredListings.length === 0) {
+    const filteredListings = currentFilter === 'all' 
+      ? expandedListings 
+      : expandedListings.filter(item => item.type === currentFilter);
+
+    if (filteredListings.length === 0 && !isLoadMore) {
       container.innerHTML = `
         <div class="empty-state">
           <p>해당 조건의 매물이 없습니다.</p>
@@ -176,7 +194,16 @@
       return;
     }
 
-    container.innerHTML = filteredListings.map(item => `
+    // 무한 스크롤 감지기(Sentinel)가 있다면 렌더링 전 잠시 제거
+    const existingSentinel = container.querySelector('.scroll-sentinel');
+    if (existingSentinel) existingSentinel.remove();
+
+    // 현재 페이지에 해당하는 데이터만 잘라내기
+    const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+    const endIndex = startIndex + ITEMS_PER_PAGE;
+    const listingsToRender = filteredListings.slice(startIndex, endIndex);
+
+    const html = listingsToRender.map(item => `
       <div class="listing-card">
         <div class="card-image" style="background-image: url('${item.imageUrl}')">
           <span class="card-badge">${item.type}</span>
@@ -191,6 +218,33 @@
         </div>
       </div>
     `).join('');
+
+    // 더보기인지, 처음 렌더링인지에 따라 HTML 삽입 방식 변경
+    if (isLoadMore) {
+      container.insertAdjacentHTML('beforeend', html);
+    } else {
+      container.innerHTML = html;
+    }
+
+    // 불러올 데이터가 더 남았다면 감지기(Sentinel)를 맨 끝에 추가하고 관찰 시작
+    if (endIndex < filteredListings.length) {
+      container.insertAdjacentHTML('beforeend', '<div class="scroll-sentinel"><span class="loader"></span></div>');
+      const sentinel = container.querySelector('.scroll-sentinel');
+      setupInfiniteScroll(sentinel);
+    }
+  }
+
+  function setupInfiniteScroll(sentinel) {
+    if (infiniteObserver) infiniteObserver.disconnect();
+
+    infiniteObserver = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        currentPage++;
+        renderListings(currentFilter, true); // 다음 페이지 렌더링 (isLoadMore = true)
+      }
+    }, { rootMargin: '100px' }); // 화면 하단에서 100px 남았을 때 미리 로딩
+
+    infiniteObserver.observe(sentinel);
   }
 
   // 초기 렌더링 실행

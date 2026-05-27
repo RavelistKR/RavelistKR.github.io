@@ -599,6 +599,11 @@
         if (response.ok) {
           if (successMessage) successMessage.hidden = false;
           consultForm.reset(); // 성공 시 폼 입력값 초기화
+          
+          // 5초 뒤에 성공 메시지도 다시 숨기기 (완전한 초기화)
+          setTimeout(() => {
+            if (successMessage) successMessage.hidden = true;
+          }, 5000);
         } else {
           if (errorMessage) errorMessage.hidden = false;
         }

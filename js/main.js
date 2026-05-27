@@ -3,6 +3,7 @@
   const button = document.querySelector('[data-theme-toggle]');
   const header = document.querySelector('.site-header');
   const nav = document.querySelector('.nav-links');
+  const menuToggle = document.querySelector('.menu-toggle');
   const navLinks = Array.from(document.querySelectorAll('.nav-links a[href^="#"]'));
 
   const sections = navLinks
@@ -117,8 +118,33 @@
     initScrollSpy();
   });
 
+  function updateMenuIcon(isOpen) {
+    if (!menuToggle) return;
+    menuToggle.innerHTML = isOpen
+      ? '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>'
+      : '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>';
+    menuToggle.setAttribute('aria-label', isOpen ? '메뉴 닫기' : '메뉴 열기');
+  }
+
+  if (menuToggle) {
+    menuToggle.addEventListener('click', () => {
+      const isOpen = nav.classList.toggle('is-open');
+      menuToggle.setAttribute('aria-expanded', isOpen);
+      updateMenuIcon(isOpen);
+    });
+  }
+
   navLinks.forEach((link) => {
     link.addEventListener('click', function () {
+      // 모바일 메뉴가 열려있다면 링크 클릭 시 메뉴 닫기
+      if (nav.classList.contains('is-open')) {
+        nav.classList.remove('is-open');
+        if (menuToggle) {
+          menuToggle.setAttribute('aria-expanded', 'false');
+          updateMenuIcon(false);
+        }
+      }
+
       const currentItem = sections.find((item) => item.link === link);
       if (currentItem) {
         setActiveNavLink(currentItem);

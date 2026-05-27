@@ -251,6 +251,17 @@
   gap: 24px;
 }
 
+.empty-state {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 64px 20px;
+  background: var(--color-surface-2);
+  border: 1px dashed var(--color-border);
+  border-radius: 12px;
+  color: var(--color-text-muted);
+  font-size: var(--text-base);
+}
+
 .listing-card {
   border-radius: 12px;
   overflow: hidden;

@@ -167,6 +167,15 @@
       ? dummyListings 
       : dummyListings.filter(item => item.type === filterType);
 
+    if (filteredListings.length === 0) {
+      container.innerHTML = `
+        <div class="empty-state">
+          <p>해당 조건의 매물이 없습니다.</p>
+        </div>
+      `;
+      return;
+    }
+
     container.innerHTML = filteredListings.map(item => `
       <div class="listing-card">
         <div class="card-image" style="background-image: url('${item.imageUrl}')">

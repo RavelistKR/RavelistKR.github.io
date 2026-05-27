@@ -205,11 +205,31 @@
   // 외부 JSON 데이터를 비동기로 불러오는 함수
   async function loadListingsData() {
     try {
-      // [!] 실제 데이터 연동 시 아래 두 줄의 주석(//)을 해제하세요.
-      // const response = await fetch('./data/listings.json');
-      // realListings = await response.json();
+      // [!] Step 2에서 복사한 본인의 스프레드시트 ID를 아래에 붙여넣으세요.
+      const SHEET_ID = '여기에_복사한_ID를_넣어주세요'; 
+      const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&headers=1`;
 
-      // (현재 임시 코드) JSON 파일이 준비되기 전까지 기존 더미 데이터를 복제하여 사용
+      const response = await fetch(url);
+      const text = await response.text();
+
+      // 구글 API가 반환하는 텍스트에서 순수 JSON 데이터만 추출
+      const jsonString = text.match(/google\.visualization\.Query\.setResponse\(([\s\S]+)\);/)[1];
+      const data = JSON.parse(jsonString);
+
+      // 스프레드시트의 각 행(Row) 데이터를 웹사이트에 맞는 객체로 변환
+      realListings = data.table.rows.map(row => {
+        const cols = row.c;
+        return {
+          id: cols[0] ? cols[0].v : '',
+          type: cols[1] ? cols[1].v : '',
+          price: cols[2] ? cols[2].v : '',
+          title: cols[3] ? cols[3].v : '',
+          details: cols[4] ? cols[4].v : '',
+          tags: cols[5] && cols[5].v ? cols[5].v.split(',').map(tag => tag.trim()) : [],
+          imageUrl: cols[6] ? cols[6].v : ''
+        };
+      }).filter(item => item.id); // ID가 없는 빈 행은 제외
+
       if (realListings.length === 0) {
         realListings = Array.from({ length: 12 }, (_, i) => ({ ...dummyListings[i % dummyListings.length], id: i + 1 }));
       }

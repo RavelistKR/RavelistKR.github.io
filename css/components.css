@@ -403,6 +403,40 @@
   font-size: var(--text-xs);
 }
 
+/* 맨 위로 가기 버튼 */
+.btn-top {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  z-index: 50;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-full, 999px);
+  background: var(--color-primary);
+  color: white;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-lg);
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px);
+  transition: opacity 240ms ease, visibility 240ms ease, transform 240ms ease, background 180ms ease;
+}
+
+.btn-top.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.btn-top.is-visible:hover {
+  transform: translateY(-4px);
+  background: color-mix(in srgb, var(--color-primary) 85%, black);
+}
+
 /* 키보드 포커스 보강 */
 .nav-links a:focus-visible,
 .brand:focus-visible,
@@ -479,6 +513,13 @@
 @media (max-width: 640px) {
   .btn {
     width: 100%;
+  }
+
+  .btn-top {
+    bottom: 20px;
+    right: 20px;
+    width: 44px;
+    height: 44px;
   }
 
   /* 모바일 푸터 가독성 개선 */

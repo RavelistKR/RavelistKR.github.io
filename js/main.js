@@ -4,6 +4,7 @@
   const header = document.querySelector('.site-header');
   const nav = document.querySelector('.nav-links');
   const menuToggle = document.querySelector('.menu-toggle');
+  const btnTop = document.getElementById('btn-top');
   const navLinks = Array.from(document.querySelectorAll('.nav-links a[href^="#"]'));
 
   const sections = navLinks
@@ -93,6 +94,9 @@
     if (!isScrolling) {
       window.requestAnimationFrame(() => {
         updateHeaderState();
+        if (btnTop) {
+          btnTop.classList.toggle('is-visible', window.scrollY > 300);
+        }
         isScrolling = false;
       });
       isScrolling = true;
@@ -131,6 +135,12 @@
       const isOpen = nav.classList.toggle('is-open');
       menuToggle.setAttribute('aria-expanded', isOpen);
       updateMenuIcon(isOpen);
+    });
+  }
+
+  if (btnTop) {
+    btnTop.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   }
 

@@ -355,11 +355,51 @@
     }
   ];
 
+  // 실제 실거래가 데이터를 담을 전역 배열
+  let realPrices = [];
+
+  // 외부 JSON(구글 시트) 데이터를 비동기로 불러오는 함수
+  async function loadPricesData() {
+    try {
+      // [!] 실거래가용으로 새로 만든 구글 스프레드시트의 ID를 붙여넣으세요.
+      const PRICE_SHEET_ID = '여기에_실거래가_스프레드시트_ID를_넣어주세요'; 
+      const url = `https://docs.google.com/spreadsheets/d/${PRICE_SHEET_ID}/gviz/tq?tqx=out:json&headers=1`;
+
+      const response = await fetch(url);
+      const text = await response.text();
+
+      const jsonString = text.match(/google\.visualization\.Query\.setResponse\(([\s\S]+)\);/)[1];
+      const data = JSON.parse(jsonString);
+
+      // 스프레드시트 데이터를 자바스크립트 객체로 변환
+      realPrices = data.table.rows.map(row => {
+        const cols = row.c;
+        return {
+          id: cols[0] ? cols[0].v : '',
+          title: cols[1] ? cols[1].v : '',
+          price: cols[2] ? cols[2].v : '',
+          date: cols[3] ? cols[3].v : '',
+          desc: cols[4] ? cols[4].v : ''
+        };
+      }).filter(item => item.id);
+
+      if (realPrices.length === 0) {
+        realPrices = [...dummyPrices];
+      }
+      
+      renderPrices(); // 데이터 로딩 완료 후 화면 렌더링
+    } catch (error) {
+      console.error('실거래가 데이터를 불러오는 중 오류가 발생했습니다:', error);
+      realPrices = [...dummyPrices]; // 에러 발생 시 임시 데이터 렌더링
+      renderPrices();
+    }
+  }
+
   function renderPrices() {
     const container = document.querySelector('#price .focus-grid');
     if (!container) return;
 
-    container.innerHTML = dummyPrices.map(item => `
+    container.innerHTML = realPrices.map(item => `
       <article class="section-card" data-id="${item.id}">
         <span class="number">${item.id}</span>
         <h3 style="margin-bottom: 8px;">${item.title}</h3>
@@ -372,7 +412,8 @@
     `).join('');
   }
 
-  renderPrices();
+  // 초기 렌더링 함수 교체
+  loadPricesData();
 
   // ==========================================
   // 상세 정보 팝업 (Modal) 처리 로직
@@ -479,7 +520,8 @@
       const card = e.target.closest('.section-card');
       if (!card) return;
       const id = card.getAttribute('data-id');
-      const item = dummyPrices.find(p => p.id === id);
+      // 스프레드시트의 숫자형 id와 HTML의 문자열 id를 안전하게 비교
+      const item = realPrices.find(p => String(p.id) === String(id));
       if (item) {
         openModal(`
           <div style="margin-bottom: 24px;">

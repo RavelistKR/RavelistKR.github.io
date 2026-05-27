@@ -125,4 +125,61 @@
       }
     });
   });
+
+  // ==========================================
+  // 추천 매물 더미 데이터 및 카드 렌더링
+  // ==========================================
+  const dummyListings = [
+    {
+      id: 1,
+      type: '매매',
+      price: '5억 5,000',
+      title: '의정부역 도보 5분 신축 3룸',
+      details: '방 3 · 화장실 2 · 남향 · 고층',
+      tags: ['역세권', '신축', '채광우수'],
+      imageUrl: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=400&q=80'
+    },
+    {
+      id: 2,
+      type: '전세',
+      price: '3억 2,000',
+      title: '양주 옥정신도시 중심상가 인근',
+      details: '방 3 · 화장실 2 · 판상형 구조',
+      tags: ['인프라', '공원인접', '학세권'],
+      imageUrl: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=400&q=80'
+    },
+    {
+      id: 3,
+      type: '월세',
+      price: '3,000 / 120',
+      title: '의정부 민락동 깔끔한 투룸',
+      details: '방 2 · 화장실 1 · 풀옵션',
+      tags: ['풀옵션', '즉시입주', '주차편리'],
+      imageUrl: 'https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=400&q=80'
+    }
+  ];
+
+  function renderListings() {
+    const container = document.querySelector('#listings .listings-grid');
+    if (!container) return;
+
+    container.innerHTML = dummyListings.map(item => `
+      <div class="listing-card">
+        <div class="card-image" style="background-image: url('${item.imageUrl}')">
+          <span class="card-badge">${item.type}</span>
+        </div>
+        <div class="card-content">
+          <h3 class="card-price">${item.price}</h3>
+          <p class="card-title">${item.title}</p>
+          <p class="card-details">${item.details}</p>
+          <div class="card-tags">
+            ${item.tags.map(tag => `<span class="tag">#${tag}</span>`).join('')}
+          </div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  // 초기 렌더링 실행
+  renderListings();
 })();

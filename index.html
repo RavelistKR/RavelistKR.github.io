@@ -366,5 +366,19 @@
       <polyline points="5 12 12 5 19 12"></polyline>
     </svg>
   </button>
+
+  <!-- 상세 정보 모달 (Modal) -->
+  <div class="modal" id="detail-modal" aria-hidden="true" tabindex="-1">
+    <div class="modal-backdrop" data-modal-close></div>
+    <div class="modal-dialog" role="dialog" aria-modal="true">
+      <button class="modal-close" type="button" data-modal-close aria-label="모달 닫기">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+      <div class="modal-content" id="modal-body"></div>
+    </div>
+  </div>
 </body>
 </html>

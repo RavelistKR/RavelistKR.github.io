@@ -285,6 +285,7 @@
   box-shadow: var(--shadow-md);
   transition: transform 180ms ease;
   border: 1px solid var(--color-border);
+  cursor: pointer;
 }
 
 .listing-card:hover {
@@ -440,6 +441,128 @@
 .btn-top.is-visible:hover {
   transform: translateY(-4px);
   background: color-mix(in srgb, var(--color-primary) 85%, black);
+}
+
+/* 모달 (Modal) UI */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 240ms ease, visibility 240ms ease;
+}
+
+.modal.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+}
+
+.modal-dialog {
+  position: relative;
+  width: 100%;
+  max-width: 540px;
+  max-height: 90vh;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  overflow-y: auto;
+  transform: translateY(20px);
+  transition: transform 240ms ease;
+  z-index: 101;
+}
+
+.modal.is-open .modal-dialog {
+  transform: translateY(0);
+}
+
+.modal-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text);
+  transition: all 0.2s ease;
+  z-index: 102;
+}
+
+.modal-close:hover {
+  background: var(--color-surface-offset);
+  transform: rotate(90deg);
+}
+
+.modal-content {
+  padding: 32px 24px;
+}
+
+.modal-image {
+  width: 100%;
+  height: 240px;
+  object-fit: cover;
+  border-radius: calc(var(--radius-lg) - 8px);
+  margin-bottom: 20px;
+}
+
+.modal-title {
+  font-size: var(--text-xl);
+  margin-bottom: 8px;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+}
+
+.modal-price {
+  font-size: var(--text-lg);
+  color: var(--color-primary);
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.modal-desc {
+  color: var(--color-text-muted);
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+.modal-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 24px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.modal-meta span {
+  background: var(--color-surface-2);
+  padding: 6px 12px;
+  border-radius: var(--radius-full);
+  font-size: var(--text-xs);
+  color: var(--color-text);
 }
 
 /* 키보드 포커스 보강 */

@@ -239,7 +239,7 @@
     const listingsToRender = filteredListings.slice(startIndex, endIndex);
 
     const html = listingsToRender.map(item => `
-      <div class="listing-card">
+      <div class="listing-card" data-id="${item.id}">
         <div class="card-image" style="background-image: url('${item.imageUrl}')">
           <span class="card-badge">${item.type}</span>
         </div>
@@ -325,7 +325,7 @@
     if (!container) return;
 
     container.innerHTML = dummyPrices.map(item => `
-      <article class="section-card">
+      <article class="section-card" data-id="${item.id}">
         <span class="number">${item.id}</span>
         <h3 style="margin-bottom: 8px;">${item.title}</h3>
         <p style="margin-bottom: 12px;">
@@ -338,6 +338,85 @@
   }
 
   renderPrices();
+
+  // ==========================================
+  // 상세 정보 팝업 (Modal) 처리 로직
+  // ==========================================
+  const modal = document.getElementById('detail-modal');
+  const modalBody = document.getElementById('modal-body');
+  const modalCloseBtns = document.querySelectorAll('[data-modal-close]');
+
+  function openModal(contentHtml) {
+    if (!modal || !modalBody) return;
+    modalBody.innerHTML = contentHtml;
+    modal.classList.add('is-open');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden'; // 배경 스크롤 방지
+  }
+
+  function closeModal() {
+    if (!modal) return;
+    modal.classList.remove('is-open');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = ''; // 배경 스크롤 복구
+  }
+
+  modalCloseBtns.forEach(btn => btn.addEventListener('click', closeModal));
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal.classList.contains('is-open')) closeModal();
+  });
+
+  if (modalBody) {
+    modalBody.addEventListener('click', (e) => {
+      if (e.target.closest('a[href^="#"]')) closeModal(); // 모달 내 상담 버튼 클릭 시 자동 닫기
+    });
+  }
+
+  // 추천매물 카드 클릭 이벤트
+  const listingsContainer = document.querySelector('#listings .listings-grid');
+  if (listingsContainer) {
+    listingsContainer.addEventListener('click', (e) => {
+      const card = e.target.closest('.listing-card');
+      if (!card) return;
+      const id = Number(card.getAttribute('data-id'));
+      const item = expandedListings.find(l => l.id === id);
+      if (item) {
+        openModal(`
+          <img class="modal-image" src="${item.imageUrl}" alt="${item.title}">
+          <h2 class="modal-title">${item.title}</h2>
+          <div class="modal-price">${item.type} ${item.price}</div>
+          <p class="modal-desc">${item.details}</p>
+          <div class="modal-meta">
+            ${item.tags.map(tag => `<span>#${tag}</span>`).join('')}
+          </div>
+          <a href="#contact" class="btn btn-primary" style="width: 100%;">이 매물 상담하기</a>
+        `);
+      }
+    });
+  }
+
+  // 실거래가 카드 클릭 이벤트
+  const priceContainer = document.querySelector('#price .focus-grid');
+  if (priceContainer) {
+    priceContainer.addEventListener('click', (e) => {
+      const card = e.target.closest('.section-card');
+      if (!card) return;
+      const id = card.getAttribute('data-id');
+      const item = dummyPrices.find(p => p.id === id);
+      if (item) {
+        openModal(`
+          <div style="margin-bottom: 24px;">
+            <span class="number" style="background: color-mix(in srgb, #b08a2a 16%, var(--color-surface-2)); color: #8a6a16; padding: 8px 12px; border-radius: 999px; font-size: var(--text-xs); font-weight: 700;">${item.id}</span>
+          </div>
+          <h2 class="modal-title">${item.title}</h2>
+          <div class="modal-price">${item.price} <span style="font-size: var(--text-sm); font-weight: normal; color: var(--color-text-faint);">(${item.date})</span></div>
+          <p class="modal-desc">${item.desc}</p>
+          <a href="#contact" class="btn btn-primary" style="width: 100%;">이 지역 실거래 상담하기</a>
+        `);
+      }
+    });
+  }
 
   // ==========================================
   // 상담 문의 폼 (Formspree) 비동기 전송 처리

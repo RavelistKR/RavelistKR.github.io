@@ -294,6 +294,52 @@
   });
 
   // ==========================================
+  // 실거래가·시세 더미 데이터 및 카드 렌더링
+  // ==========================================
+  const dummyPrices = [
+    {
+      id: '01',
+      title: '의정부역 센트럴자이 (84㎡)',
+      price: '7억 2,000만원',
+      date: '24.05 최근 거래',
+      desc: '현재 호가는 7억 3,000 ~ 7억 5,000 선에 형성되어 있으며, 역세권 신축 수요로 꾸준한 거래가 이어지고 있습니다.'
+    },
+    {
+      id: '02',
+      title: '탑석센트럴자이 (84㎡)',
+      price: '5억 8,000만원',
+      date: '24.04 최근 거래',
+      desc: '고산지구 대장 단지로 실거주 만족도가 높으며, 전세가는 3억 5,000만원 전후로 안정적인 흐름을 보입니다.'
+    },
+    {
+      id: '03',
+      title: '양주옥정 대방노블랜드 (84㎡)',
+      price: '4억 5,000만원',
+      date: '24.05 최근 거래',
+      desc: '신도시 인프라가 갖춰지며 문의가 늘고 있습니다. 급매물이 소진되며 호가가 점진적으로 오르는 추세입니다.'
+    }
+  ];
+
+  function renderPrices() {
+    const container = document.querySelector('#price .focus-grid');
+    if (!container) return;
+
+    container.innerHTML = dummyPrices.map(item => `
+      <article class="section-card">
+        <span class="number">${item.id}</span>
+        <h3 style="margin-bottom: 8px;">${item.title}</h3>
+        <p style="margin-bottom: 12px;">
+          <strong style="color: var(--color-primary); font-size: 1.1rem;">${item.price}</strong> 
+          <span style="font-size: var(--text-xs); color: var(--color-text-faint);">(${item.date})</span>
+        </p>
+        <p>${item.desc}</p>
+      </article>
+    `).join('');
+  }
+
+  renderPrices();
+
+  // ==========================================
   // 상담 문의 폼 (Formspree) 비동기 전송 처리
   // ==========================================
   const consultForm = document.querySelector('.consult-form');

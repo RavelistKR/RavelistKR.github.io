@@ -159,11 +159,15 @@
     }
   ];
 
-  function renderListings() {
+  function renderListings(filterType = 'all') {
     const container = document.querySelector('#listings .listings-grid');
     if (!container) return;
 
-    container.innerHTML = dummyListings.map(item => `
+    const filteredListings = filterType === 'all' 
+      ? dummyListings 
+      : dummyListings.filter(item => item.type === filterType);
+
+    container.innerHTML = filteredListings.map(item => `
       <div class="listing-card">
         <div class="card-image" style="background-image: url('${item.imageUrl}')">
           <span class="card-badge">${item.type}</span>
@@ -182,4 +186,18 @@
 
   // 초기 렌더링 실행
   renderListings();
+
+  // 탭 필터 이벤트 리스너 추가
+  const tabButtons = document.querySelectorAll('.tab-btn');
+  tabButtons.forEach(button => {
+    button.addEventListener('click', (e) => {
+      // 모든 탭 버튼에서 활성화 상태 제거 후 클릭된 버튼만 활성화
+      tabButtons.forEach(btn => btn.classList.remove('is-active'));
+      e.target.classList.add('is-active');
+
+      // 선택된 필터값으로 데이터 다시 렌더링
+      const filter = e.target.getAttribute('data-filter');
+      renderListings(filter);
+    });
+  });
 })();

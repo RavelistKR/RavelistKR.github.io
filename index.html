@@ -333,12 +333,32 @@
           </p>
         </div>
 
-        <article class="section-card">
-          <h3>예정 안내 방식</h3>
-          <p>
-            네이버지도 또는 카카오맵 임베드, 주변 지하철역·버스정류장, 주차 가능 여부를 함께 정리하는 구성이 좋습니다.
-          </p>
-        </article>
+        <div class="map-layout">
+          <div class="map-embed">
+            <!-- [!] 카카오맵이나 네이버지도에서 발급받은 HTML 태그(iframe)를 여기에 덮어쓰세요 -->
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3156.417244983962!2d127.0436943153163!3d37.73919897976527!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357c963098e945c1%3A0xe542617300db1bb5!2z6rK96riw64-EIOydmOygleu2gOyLnA!5e0!3m2!1sko!2skr!4v1716769200000!5m2!1sko!2skr" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </div>
+
+          <article class="map-card info-box">
+            <div class="section-head" style="margin-bottom: 16px;">
+              <h3>사무소 안내</h3>
+            </div>
+            <ul class="info-list">
+              <li class="info-item">
+                <span class="k">주소</span>
+                <span class="v">경기도 의정부시 OO로 123, 1층</span>
+              </li>
+              <li class="info-item">
+                <span class="k">대중교통</span>
+                <span class="v">1호선 의정부역 2번 출구 도보 5분</span>
+              </li>
+              <li class="info-item">
+                <span class="k">주차</span>
+                <span class="v">건물 뒤편 전용 주차장 무료 이용</span>
+              </li>
+            </ul>
+          </article>
+        </div>
       </div>
     </section>
   </main>

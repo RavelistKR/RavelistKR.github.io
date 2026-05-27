@@ -345,13 +345,22 @@
   const modal = document.getElementById('detail-modal');
   const modalBody = document.getElementById('modal-body');
   const modalCloseBtns = document.querySelectorAll('[data-modal-close]');
+  let previousActiveElement = null; // 포커스 복구를 위한 변수
 
   function openModal(contentHtml) {
     if (!modal || !modalBody) return;
+    
+    previousActiveElement = document.activeElement; // 모달 열기 전 활성 요소 기억
+
     modalBody.innerHTML = contentHtml;
     modal.classList.add('is-open');
     modal.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden'; // 배경 스크롤 방지
+
+    setTimeout(() => {
+      const closeBtn = modal.querySelector('.modal-close');
+      if (closeBtn) closeBtn.focus();
+    }, 100);
   }
 
   function closeModal() {
@@ -359,6 +368,10 @@
     modal.classList.remove('is-open');
     modal.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = ''; // 배경 스크롤 복구
+
+    if (previousActiveElement) {
+      previousActiveElement.focus();
+    }
   }
 
   modalCloseBtns.forEach(btn => btn.addEventListener('click', closeModal));
@@ -366,6 +379,27 @@
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && modal.classList.contains('is-open')) closeModal();
   });
+
+  // 모달 내부에서 Tab 키를 누를 때 밖으로 나가지 않도록 가두기 (Focus Trap)
+  if (modal) {
+    modal.addEventListener('keydown', (e) => {
+      if (e.key !== 'Tab') return;
+      
+      const focusable = modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+      if (!focusable.length) return;
+      
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    });
+  }
 
   if (modalBody) {
     modalBody.addEventListener('click', (e) => {
@@ -394,6 +428,13 @@
         `);
       }
     });
+
+    listingsContainer.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        const card = e.target.closest('.listing-card');
+        if (card) { e.preventDefault(); card.click(); }
+      }
+    });
   }
 
   // 실거래가 카드 클릭 이벤트
@@ -414,6 +455,13 @@
           <p class="modal-desc">${item.desc}</p>
           <a href="#contact" class="btn btn-primary" style="width: 100%;">이 지역 실거래 상담하기</a>
         `);
+      }
+    });
+
+    priceContainer.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        const card = e.target.closest('.section-card');
+        if (card) { e.preventDefault(); card.click(); }
       }
     });
   }

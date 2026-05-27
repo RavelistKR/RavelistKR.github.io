@@ -45,16 +45,8 @@
     });
   }
 
-  function updateActiveNav() {
-    if (!sections.length) return;
-
-    let current = sections[0];
-
-    sections.forEach((item) => {
-      if (window.scrollY >= item.target.offsetTop - headerOffset) {
-        current = item;
-      }
-    });
+  function setActiveNavLink(current) {
+    if (!current) return;
 
     sections.forEach((item) => {
       const isCurrent = item === current;
@@ -73,12 +65,33 @@
     }
   }
 
+  let observer = null;
+  function initScrollSpy() {
+    if (!sections.length) return;
+    if (observer) observer.disconnect();
+
+    // 헤더 영역 아래부터 화면의 50% 지점 사이에 섹션이 들어오는지 관찰
+    const rootMargin = `-${headerOffset}px 0px -50% 0px`;
+    observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const currentItem = sections.find((item) => item.target === entry.target);
+            setActiveNavLink(currentItem);
+          }
+        });
+      },
+      { rootMargin, threshold: 0 }
+    );
+
+    sections.forEach((item) => observer.observe(item.target));
+  }
+
   let isScrolling = false;
   function onScroll() {
     if (!isScrolling) {
       window.requestAnimationFrame(() => {
         updateHeaderState();
-        updateActiveNav();
         isScrolling = false;
       });
       isScrolling = true;
@@ -87,7 +100,7 @@
 
   renderIcon(mode);
   updateHeaderState();
-  updateActiveNav();
+  initScrollSpy();
 
   if (button) {
     button.addEventListener('click', function () {
@@ -101,15 +114,15 @@
   window.addEventListener('scroll', onScroll, { passive: true });
   window.addEventListener('resize', () => {
     headerOffset = (header ? header.offsetHeight : 72) + 80;
-    updateActiveNav();
+    initScrollSpy();
   });
 
   navLinks.forEach((link) => {
     link.addEventListener('click', function () {
-      requestAnimationFrame(() => {
-        updateActiveNav();
-        scrollActiveLinkIntoView(link);
-      });
+      const currentItem = sections.find((item) => item.link === link);
+      if (currentItem) {
+        setActiveNavLink(currentItem);
+      }
     });
   });
 })();

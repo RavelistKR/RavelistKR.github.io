@@ -492,7 +492,15 @@
 
   if (modalBody) {
     modalBody.addEventListener('click', (e) => {
-      if (e.target.closest('a[href^="#"]')) closeModal(); // 모달 내 상담 버튼 클릭 시 자동 닫기
+      const link = e.target.closest('a[href^="#"]');
+      if (link) {
+        const title = link.getAttribute('data-title');
+        const topicInput = document.getElementById('topic');
+        if (title && topicInput) {
+          topicInput.value = title; // 문의 폼의 상담 주제 칸에 자동으로 값 입력
+        }
+        closeModal(); // 모달 내 상담 버튼 클릭 시 자동 닫기
+      }
     });
   }
 
@@ -513,7 +521,7 @@
           <div class="modal-meta">
             ${item.tags.map(tag => `<span>#${tag}</span>`).join('')}
           </div>
-          <a href="#contact" class="btn btn-primary" style="width: 100%;">이 매물 상담하기</a>
+          <a href="#contact" class="btn btn-primary" data-title="[매물 문의] ${item.title}" style="width: 100%;">이 매물 상담하기</a>
         `);
       }
     });
@@ -543,7 +551,7 @@
           <h2 class="modal-title">${item.title}</h2>
           <div class="modal-price">${item.price} <span style="font-size: var(--text-sm); font-weight: normal; color: var(--color-text-faint);">(${item.date})</span></div>
           <p class="modal-desc">${item.desc}</p>
-          <a href="#contact" class="btn btn-primary" style="width: 100%;">이 지역 실거래 상담하기</a>
+          <a href="#contact" class="btn btn-primary" data-title="[시세 문의] ${item.title}" style="width: 100%;">이 지역 실거래 상담하기</a>
         `);
       }
     });

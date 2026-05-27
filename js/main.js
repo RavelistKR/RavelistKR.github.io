@@ -618,4 +618,23 @@
       }
     });
   }
+
+  // ==========================================
+  // 스크롤 등장 애니메이션 (Scroll Reveal)
+  // ==========================================
+  const revealObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target); // 한 번 화면에 나타나면 관찰 해제 (성능 최적화)
+      }
+    });
+  }, { rootMargin: '0px 0px -10% 0px' });
+
+  // 주요 카드와 텍스트 박스에 자동으로 애니메이션 클래스 추가
+  const autoRevealElements = document.querySelectorAll('.hero-copy, .info-card, .section-head, .section-card, .info-box, .contact-panel, .map-card, .post-card');
+  autoRevealElements.forEach(el => {
+    el.classList.add('reveal');
+    revealObserver.observe(el);
+  });
 })();

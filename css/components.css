@@ -291,11 +291,16 @@
   transform: translateY(-4px);
 }
 
+.listing-card:hover .card-image {
+  transform: scale(1.06);
+}
+
 .card-image {
   height: 200px;
   background-size: cover;
   background-position: center;
   position: relative;
+  transition: transform 400ms ease;
 }
 
 .card-badge {

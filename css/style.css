@@ -64,6 +64,17 @@
   padding: 0;
 }
 
+/* 텍스트 드래그(선택) 영역 커스텀 */
+::selection {
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+}
+
+::-moz-selection {
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+}
+
 html {
   scroll-behavior: smooth;
 }
